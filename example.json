@@ -1,0 +1,21 @@
+[
+    {
+        "url": "https://www.google.com/maps/@45.9290883,15.6948789,3.94z?entry=ttu",
+        "displayName": "maps",
+        "bgColor": "#d5d6d0"
+    },
+    {
+        "url": "https://www.google.com",
+        "displayName": "google"
+    },
+    {
+        "url": "https://www.youtube.com",
+        "displayName": "youtube",
+        "bgColor": "#c20906"
+    },
+    {
+        "url": "https://chat.openai.com",
+        "displayName": "chat gpt",
+        "bgColor": "#99dacc"
+    }
+]

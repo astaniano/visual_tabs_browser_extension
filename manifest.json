@@ -1,0 +1,12 @@
+{
+    "manifest_version": 3,
+    "name": "Very simple visual tabs",
+    "description": "Very simple visual tabs",
+    "version": "1.0",
+    "chrome_url_overrides" : {
+      "newtab": "main.html"
+    },
+    "permissions": [
+      "storage"
+    ]
+  }
