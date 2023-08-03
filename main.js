@@ -5,21 +5,17 @@ async function main() {
     const loadTabsBtn = document.getElementById('load-tabs')
     const loadTabsTextArea = document.getElementById('ta-for-json')
 
-    const addNewTabBtn = document.getElementById('add-new-tab-btn')
+    const addNewTabForm = document.getElementById('add-new-tab-form')
     const newTabUrl = document.getElementById('new-tab-url')
     const newTabName = document.getElementById('new-tab-name')
-    const newTabColor = document.getElementById('new-tab-color')
+    const newTabBgColor = document.getElementById('new-tab-color')
 
-    addNewTabBtn.addEventListener('click', async () => {
-        
-    });
-
-    const recreateVisualTabs = async (tabs) => {
-        if (tabs.length > 0) {
+    const recreateVisualTabs = async (tabsAsString) => {
+        if (tabsAsString.length > 0) {
             try {
-                arrOfTabs = JSON.parse(tabs);
+                arrOfTabs = JSON.parse(tabsAsString);
             } catch (error) {
-                alert('invalid json') 
+                alert('invalid json')
                 return;
             }
 
@@ -38,7 +34,7 @@ async function main() {
                 visualTabsContainer.appendChild(visualTab);
             }
 
-            await chrome.storage.local.set({ [keyInStorage]: tabs })
+            await chrome.storage.local.set({ [keyInStorage]: tabsAsString })
         }
     }
 
@@ -46,12 +42,42 @@ async function main() {
         await recreateVisualTabs(loadTabsTextArea.value);
     });
 
-    const res = await chrome.storage.local.get([keyInStorage]);
-    const savedTabs = res[keyInStorage];
+    const chromeStorage = await chrome.storage.local.get([keyInStorage]);
+    const savedTabsAsString = chromeStorage[keyInStorage];
 
-    loadTabsTextArea.value = savedTabs;
+    loadTabsTextArea.value = savedTabsAsString;
+    await recreateVisualTabs(savedTabsAsString);
 
-    await recreateVisualTabs(savedTabs);
+    addNewTabForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        let arrOfTabs = [];
+
+        if (savedTabsAsString.length > 0) {
+            try {
+                arrOfTabs = JSON.parse(savedTabsAsString);
+            } catch (error) {
+                alert('invalid json');
+                return;
+            }
+        }
+
+        if (!newTabUrl.value.startsWith('https')) {
+            alert('invalid url')
+            return;
+        }
+        const newVisualTab = {
+            url: newTabUrl.value,
+            displayName: newTabName.value,
+            bgColor: newTabBgColor.value
+        }
+
+        arrOfTabs.push(newVisualTab);
+        const updatedTabsAsString = JSON.stringify(arrOfTabs, null, 2);
+
+        await chrome.storage.local.set({ [keyInStorage]: updatedTabsAsString })
+        loadTabsTextArea.value = updatedTabsAsString;
+    })
 }
 
 main()

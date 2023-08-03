@@ -12,6 +12,9 @@
 
 .links-container {
     display: flex;
+    width: 1080px;
+    flex-wrap: wrap;
+    height: 45%;
 }
 
 .link {
