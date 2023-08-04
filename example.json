@@ -1,27 +1,27 @@
 [
     {
-        "url": "https://www.google.com/maps/@45.9290883,15.6948789,3.94z?entry=ttu",
-        "displayName": "maps",
-        "bgColor": "#03e8fc"
+      "url": "https://www.google.com/maps/@45.9290883,15.6948789,3.94z?entry=ttu",
+      "displayName": "maps",
+      "bgColor": "#03e8fc"
     },
     {
-        "url": "https://www.google.com",
-        "displayName": "google",
-        "bgColor": "#d5d6d0"
+      "url": "https://www.google.com",
+      "displayName": "google",
+      "bgColor": "#d5d6d0"
     },
     {
-        "url": "https://www.youtube.com",
-        "displayName": "youtube",
-        "bgColor": "#c20906"
+      "url": "https://www.youtube.com",
+      "displayName": "youtube",
+      "bgColor": "#c20906"
     },
     {
-        "url": "https://chat.openai.com",
-        "displayName": "chat gpt",
-        "bgColor": "#99dacc"
+      "url": "https://chat.openai.com",
+      "displayName": "chat gpt",
+      "bgColor": "#99dacc"
     },
     {
-        "url": "https://github.com/astaniano?tab=repositories",
-        "displayName": "github",
-        "bgColor": "#161717"
+      "url": "https://github.com/astaniano?tab=repositories",
+      "displayName": "github",
+      "bgColor": "#161717"
     }
 ]

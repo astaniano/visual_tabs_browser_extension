@@ -10,57 +10,67 @@ async function main() {
     const newTabName = document.getElementById('new-tab-name')
     const newTabBgColor = document.getElementById('new-tab-color')
 
-    const recreateVisualTabs = async (tabsAsString) => {
-        if (tabsAsString.length > 0) {
+    const chromeStorage = await chrome.storage.local.get([keyInStorage]);
+    const savedTabsAsString = chromeStorage[keyInStorage];
+
+    let arrOfTabs = [];
+
+    if (savedTabsAsString.length > 0) {
+        try {
+            arrOfTabs = JSON.parse(savedTabsAsString);
+        } catch (error) {
+            alert('invalid json');
+            return;
+        }
+
+        visualTabsContainer.replaceChildren([])
+
+        for (const tab of arrOfTabs) {
+            const visualTab = document.createElement("button");
+
+            visualTab.innerText = tab.displayName || "no name"; 
+            visualTab.classList.add('link');
+            visualTab.style.backgroundColor = tab.bgColor;
+            visualTab.addEventListener('click', () => {
+                location.assign(tab.url);
+            });
+
+            visualTabsContainer.appendChild(visualTab);
+        }
+
+        loadTabsTextArea.value = savedTabsAsString;
+    }
+
+    loadTabsBtn.addEventListener('click', async () => {
+        if (loadTabsTextArea.value.length > 0) {
             try {
-                arrOfTabs = JSON.parse(tabsAsString);
+                arrOfTabs = JSON.parse(loadTabsTextArea.value);
             } catch (error) {
-                alert('invalid json')
+                alert('invalid json');
                 return;
             }
-
+    
             visualTabsContainer.replaceChildren([])
-
+    
             for (const tab of arrOfTabs) {
                 const visualTab = document.createElement("button");
-
-                visualTab.innerText = tab.displayName || "no name"; 
+    
+                visualTab.innerText = tab.displayName; 
                 visualTab.classList.add('link');
                 visualTab.style.backgroundColor = tab.bgColor;
                 visualTab.addEventListener('click', () => {
                     location.assign(tab.url);
                 });
-
+    
                 visualTabsContainer.appendChild(visualTab);
             }
-
-            await chrome.storage.local.set({ [keyInStorage]: tabsAsString })
-        }
-    }
-
-    loadTabsBtn.addEventListener('click', async () => {
-        await recreateVisualTabs(loadTabsTextArea.value);
+    
+            await chrome.storage.local.set({ [keyInStorage]: loadTabsTextArea.value })
+        } 
     });
-
-    const chromeStorage = await chrome.storage.local.get([keyInStorage]);
-    const savedTabsAsString = chromeStorage[keyInStorage];
-
-    loadTabsTextArea.value = savedTabsAsString;
-    await recreateVisualTabs(savedTabsAsString);
 
     addNewTabForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-
-        let arrOfTabs = [];
-
-        if (savedTabsAsString.length > 0) {
-            try {
-                arrOfTabs = JSON.parse(savedTabsAsString);
-            } catch (error) {
-                alert('invalid json');
-                return;
-            }
-        }
 
         if (!newTabUrl.value.startsWith('https')) {
             alert('invalid url')
@@ -77,6 +87,21 @@ async function main() {
 
         await chrome.storage.local.set({ [keyInStorage]: updatedTabsAsString })
         loadTabsTextArea.value = updatedTabsAsString;
+
+        visualTabsContainer.replaceChildren([])
+    
+        for (const tab of arrOfTabs) {
+            const visualTab = document.createElement("button");
+
+            visualTab.innerText = tab.displayName; 
+            visualTab.classList.add('link');
+            visualTab.style.backgroundColor = tab.bgColor;
+            visualTab.addEventListener('click', () => {
+                location.assign(tab.url);
+            });
+
+            visualTabsContainer.appendChild(visualTab);
+        }
     })
 }
 
