@@ -1,5 +1,37 @@
+const appendVisualTab = (visualTabsContainer, tab) => {
+    const visualTab = document.createElement("button")
+
+    visualTab.innerText = tab.displayName
+    visualTab.classList.add('link')
+    visualTab.style.backgroundColor = tab.bgColor
+    visualTab.addEventListener('click', () => {
+        location.assign(tab.url)
+    })
+
+    visualTabsContainer.appendChild(visualTab)
+}
+
+const recreateVisualTabs = (tabsAsJson, visualTabsContainer) => {
+    let arrOfTabs
+
+    try {
+        arrOfTabs = JSON.parse(tabsAsJson)
+    } catch (error) {
+        alert('invalid json')
+        throw new Error('invalid json')
+    }
+
+    visualTabsContainer.replaceChildren([])
+
+    for (const tab of arrOfTabs) {
+        appendVisualTab(visualTabsContainer, tab)
+    }
+
+    return arrOfTabs
+}
+
 async function main() {
-    const keyInStorage = 'storedArrOfTabs'; 
+    const keyNameInStorage = 'storedArrOfTabs'
 
     const visualTabsContainer = document.getElementById('visual-tabs-container')
     const loadTabsBtn = document.getElementById('load-tabs')
@@ -10,71 +42,29 @@ async function main() {
     const newTabName = document.getElementById('new-tab-name')
     const newTabBgColor = document.getElementById('new-tab-color')
 
-    const chromeStorage = await chrome.storage.local.get([keyInStorage]);
-    const savedTabsAsString = chromeStorage[keyInStorage];
-
-    let arrOfTabs = [];
+    const chromeStorage = await chrome.storage.local.get([keyNameInStorage])
+    const savedTabsAsString = chromeStorage[keyNameInStorage]
 
     if (savedTabsAsString.length > 0) {
-        try {
-            arrOfTabs = JSON.parse(savedTabsAsString);
-        } catch (error) {
-            alert('invalid json');
-            return;
-        }
+        recreateVisualTabs(savedTabsAsString, visualTabsContainer)
 
-        visualTabsContainer.replaceChildren([])
-
-        for (const tab of arrOfTabs) {
-            const visualTab = document.createElement("button");
-
-            visualTab.innerText = tab.displayName || "no name"; 
-            visualTab.classList.add('link');
-            visualTab.style.backgroundColor = tab.bgColor;
-            visualTab.addEventListener('click', () => {
-                location.assign(tab.url);
-            });
-
-            visualTabsContainer.appendChild(visualTab);
-        }
-
-        loadTabsTextArea.value = savedTabsAsString;
+        loadTabsTextArea.value = savedTabsAsString
     }
 
     loadTabsBtn.addEventListener('click', async () => {
         if (loadTabsTextArea.value.length > 0) {
-            try {
-                arrOfTabs = JSON.parse(loadTabsTextArea.value);
-            } catch (error) {
-                alert('invalid json');
-                return;
-            }
-    
-            visualTabsContainer.replaceChildren([])
-    
-            for (const tab of arrOfTabs) {
-                const visualTab = document.createElement("button");
-    
-                visualTab.innerText = tab.displayName; 
-                visualTab.classList.add('link');
-                visualTab.style.backgroundColor = tab.bgColor;
-                visualTab.addEventListener('click', () => {
-                    location.assign(tab.url);
-                });
-    
-                visualTabsContainer.appendChild(visualTab);
-            }
-    
-            await chrome.storage.local.set({ [keyInStorage]: loadTabsTextArea.value })
+            recreateVisualTabs(loadTabsTextArea.value, visualTabsContainer)
+
+            await chrome.storage.local.set({ [keyNameInStorage]: loadTabsTextArea.value })
         } 
-    });
+    })
 
     addNewTabForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         if (!newTabUrl.value.startsWith('https')) {
             alert('invalid url')
-            return;
+            return
         }
         const newVisualTab = {
             url: newTabUrl.value,
@@ -82,26 +72,14 @@ async function main() {
             bgColor: newTabBgColor.value
         }
 
-        arrOfTabs.push(newVisualTab);
-        const updatedTabsAsString = JSON.stringify(arrOfTabs, null, 2);
+        const arrOfTabs = JSON.parse(loadTabsTextArea.value)
+        arrOfTabs.push(newVisualTab)
+        const updatedTabsAsString = JSON.stringify(arrOfTabs, null, 2)
 
-        await chrome.storage.local.set({ [keyInStorage]: updatedTabsAsString })
-        loadTabsTextArea.value = updatedTabsAsString;
+        await chrome.storage.local.set({ [keyNameInStorage]: updatedTabsAsString })
+        loadTabsTextArea.value = updatedTabsAsString
 
-        visualTabsContainer.replaceChildren([])
-    
-        for (const tab of arrOfTabs) {
-            const visualTab = document.createElement("button");
-
-            visualTab.innerText = tab.displayName; 
-            visualTab.classList.add('link');
-            visualTab.style.backgroundColor = tab.bgColor;
-            visualTab.addEventListener('click', () => {
-                location.assign(tab.url);
-            });
-
-            visualTabsContainer.appendChild(visualTab);
-        }
+        appendVisualTab(visualTabsContainer, newVisualTab)
     })
 }
 
