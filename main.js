@@ -45,7 +45,7 @@ async function main() {
     const chromeStorage = await chrome.storage.local.get([keyNameInStorage])
     const savedTabsAsString = chromeStorage[keyNameInStorage]
 
-    if (savedTabsAsString.length > 0) {
+    if (savedTabsAsString?.length > 0) {
         recreateVisualTabs(savedTabsAsString, visualTabsContainer)
 
         loadTabsTextArea.value = savedTabsAsString
