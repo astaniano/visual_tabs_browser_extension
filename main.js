@@ -1,7 +1,10 @@
 const appendVisualTab = (visualTabsContainer, tab) => {
     const visualTab = document.createElement("button")
 
-    visualTab.innerText = tab.displayName
+    const name = tab.displayName
+    const text = name.length > 10 ? `${name.slice(0, 7)}...` : name
+
+    visualTab.innerText = text
     visualTab.classList.add('link')
     visualTab.style.backgroundColor = tab.bgColor
     visualTab.addEventListener('click', () => {
