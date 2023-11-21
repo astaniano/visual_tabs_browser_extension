@@ -65,7 +65,7 @@ async function main() {
     addNewTabForm.addEventListener("submit", async (e) => {
         e.preventDefault()
 
-        if (!newTabUrl.value.startsWith('https')) {
+        if (!newTabUrl.value.startsWith('https') && !newTabUrl.value.startsWith('file:///')) {
             alert('invalid url')
             return
         }
