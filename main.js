@@ -40,7 +40,8 @@ async function main() {
     const loadTabsBtn = document.getElementById('load-tabs')
     const loadTabsTextArea = document.getElementById('ta-for-json')
 
-    const addNewTabForm = document.getElementById('add-new-tab-form')
+    const saveNewTabBtn = document.getElementById('save-new-tab-btn')
+    const previewNewTabBtn = document.getElementById('preview-new-tab-btn')
     const newTabUrl = document.getElementById('new-tab-url')
     const newTabName = document.getElementById('new-tab-name')
     const newTabBgColor = document.getElementById('new-tab-color')
@@ -62,18 +63,32 @@ async function main() {
         } 
     })
 
-    addNewTabForm.addEventListener("submit", async (e) => {
-        e.preventDefault()
-
+    // only appends to DOM but once reloaded - changes to DOM will be lost
+    const validateAndAppendToDOM = () => {
         if (!newTabUrl.value.startsWith('https') && !newTabUrl.value.startsWith('file:///')) {
             alert('invalid url')
             return
         }
+        if (newTabName.value.length < 1) {
+            alert('tab name can not be empty')
+            return
+        }
+
         const newVisualTab = {
             url: newTabUrl.value,
             displayName: newTabName.value,
             bgColor: newTabBgColor.value
         }
+        appendVisualTab(visualTabsContainer, newVisualTab)
+
+        newTabUrl.value = ''
+        newTabName.value = ''
+
+        return newVisualTab
+    }
+
+    const saveTabPermanently = async () => {
+        const newVisualTab = validateAndAppendToDOM()
 
         const arrOfTabs = JSON.parse(loadTabsTextArea.value)
         arrOfTabs.push(newVisualTab)
@@ -81,12 +96,10 @@ async function main() {
 
         await chrome.storage.local.set({ [keyNameInStorage]: updatedTabsAsString })
         loadTabsTextArea.value = updatedTabsAsString
+    }
 
-        appendVisualTab(visualTabsContainer, newVisualTab)
-
-        newTabUrl.value = ''
-        newTabName.value = ''
-    })
+    previewNewTabBtn.addEventListener("click", validateAndAppendToDOM)
+    saveNewTabBtn.addEventListener("click", saveTabPermanently)
 }
 
 main()
