@@ -3,4 +3,4 @@ node_modules
 .idea
 .vs_code
 web-ext-artifacts
-
+.web-extension-id

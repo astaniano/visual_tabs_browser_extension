@@ -8,5 +8,10 @@
     },
     "permissions": [
       "storage"
-    ]
+    ],
+    "browser_specific_settings": {
+      "gecko": {
+        "id": "{ba87181e-c9c4-4553-9398-3e0f019ff8a4}"
+      }
+    }
   }
