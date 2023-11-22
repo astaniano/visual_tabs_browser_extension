@@ -10,6 +10,11 @@
     "bgColor": "#d5d6d0"
   },
   {
+    "url": "https://duckduckgo.com/",
+    "displayName": "duckduckgo",
+    "bgColor": "#e47c1b"
+  },
+  {
     "url": "https://www.youtube.com",
     "displayName": "youtube",
     "bgColor": "#c20906"
@@ -28,5 +33,55 @@
     "url": "https://translate.google.com/",
     "displayName": "translate",
     "bgColor": "#d5d6d0"
+  },
+  {
+    "url": "https://map.ukrainealarm.com/",
+    "displayName": "alerts",
+    "bgColor": "#f70808"
+  },
+  {
+    "url": "https://www.udemy.com/home/my-courses/learning/",
+    "displayName": "udemy",
+    "bgColor": "#c435f8"
+  },
+  {
+    "url": "https://twitter.com/home",
+    "displayName": "X",
+    "bgColor": "#161717"
+  },
+  {
+    "url": "https://emojipedia.org/people",
+    "displayName": "emoji",
+    "bgColor": "#b915f4"
+  },
+  {
+    "url": "https://www.linkedin.com/feed",
+    "displayName": "linkedin",
+    "bgColor": "#41a2ec"
+  },
+  {
+    "url": "https://www.twitch.tv/dota2ti",
+    "displayName": "twitch",
+    "bgColor": "#a20df2"
+  },
+  {
+    "url": "https://djinni.co/jobs/?primary_keyword=Node.js&exp_level=no_exp&exp_level=1y&exp_level=2y",
+    "displayName": "djinni",
+    "bgColor": "#3eb6ea"
+  },
+  {
+    "url": "https://djinni.co/jobs/?primary_keyword=Golang&exp_level=no_exp",
+    "displayName": "golang",
+    "bgColor": "#3eb6ea"
+  },
+  {
+    "url": "https://syntax.fm/shows",
+    "displayName": "syntax",
+    "bgColor": "#e4dd11"
+  },
+  {
+    "url": "https://changelog.com/",
+    "displayName": "changelog",
+    "bgColor": "#6f9570"
   }
 ]
