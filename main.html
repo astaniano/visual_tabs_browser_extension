@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="main.css" />
+    <link rel="stylesheet" type="text/css" href="./modal/modal.css" />
     <title>Very simple visual tabs</title>
 </head>
 <body>
@@ -17,18 +18,21 @@
                     <textarea id="ta-for-json" class="text-area-for-json" ></textarea>
                     <button id="load-tabs">Load tabs</button>
                 </div>
-
-                <form id="add-new-tab-form">
-                    <input required type="text" placeholder="new tab url" id="new-tab-url">
-                    <input required type="text" placeholder="new tab name" id="new-tab-name">
-                    <input type="color" value="#d5d6d0" id="new-tab-color">
-
-                    <input type="submit" value="Add a new visual tab">
-                </form>
             </div>
+        </div>
+
+        <div id="add-new-tab-modal"  class="add-new-tab-modal">
+            <form id="add-new-tab-form" class="add-new-tab-form">
+                <input required type="text" placeholder="new tab url" id="new-tab-url">
+                <input required type="text" placeholder="new tab name" id="new-tab-name">
+                <input type="color" value="#d5d6d0" id="new-tab-color">
+                <input type="submit" value="Save">
+            </form>
         </div>
     </div>
 
+    <script src="./storage/storage.js" ></script>
     <script src="main.js" ></script>
+    <script src="./modal/addNewTabModal.js" ></script>
 </body>
 </html>

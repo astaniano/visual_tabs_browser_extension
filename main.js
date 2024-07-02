@@ -1,4 +1,4 @@
-const appendVisualTab = (visualTabsContainer, tab) => {
+function appendVisualTab(visualTabsContainer, tab) {
     const visualTab = document.createElement("button")
 
     const name = tab.displayName
@@ -14,7 +14,7 @@ const appendVisualTab = (visualTabsContainer, tab) => {
     visualTabsContainer.appendChild(visualTab)
 }
 
-const recreateVisualTabs = (tabsAsJson, visualTabsContainer) => {
+function recreateVisualTabs(tabsAsJson, visualTabsContainer) {
     let arrOfTabs
 
     try {
@@ -30,23 +30,17 @@ const recreateVisualTabs = (tabsAsJson, visualTabsContainer) => {
         appendVisualTab(visualTabsContainer, tab)
     }
 
+    appendNewTabBtn(visualTabsContainer)
+
     return arrOfTabs
 }
 
 async function main() {
-    const keyNameInStorage = 'storedArrOfTabs'
-
     const visualTabsContainer = document.getElementById('visual-tabs-container')
     const loadTabsBtn = document.getElementById('load-tabs')
     const loadTabsTextArea = document.getElementById('ta-for-json')
 
-    const addNewTabForm = document.getElementById('add-new-tab-form')
-    const newTabUrl = document.getElementById('new-tab-url')
-    const newTabName = document.getElementById('new-tab-name')
-    const newTabBgColor = document.getElementById('new-tab-color')
-
-    const chromeStorage = await chrome.storage.local.get([keyNameInStorage])
-    const savedTabsAsString = chromeStorage[keyNameInStorage]
+    const savedTabsAsString = await getTabsFromStore()
 
     if (savedTabsAsString?.length > 0) {
         recreateVisualTabs(savedTabsAsString, visualTabsContainer)
@@ -58,34 +52,8 @@ async function main() {
         if (loadTabsTextArea.value.length > 0) {
             recreateVisualTabs(loadTabsTextArea.value, visualTabsContainer)
 
-            await chrome.storage.local.set({ [keyNameInStorage]: loadTabsTextArea.value })
-        } 
-    })
-
-    addNewTabForm.addEventListener("submit", async (e) => {
-        e.preventDefault()
-
-        if (!newTabUrl.value.startsWith('https') && !newTabUrl.value.startsWith('file:///')) {
-            alert('invalid url')
-            return
+            await saveTabsToStore(loadTabsTextArea.value)
         }
-        const newVisualTab = {
-            url: newTabUrl.value,
-            displayName: newTabName.value,
-            bgColor: newTabBgColor.value
-        }
-
-        const arrOfTabs = JSON.parse(loadTabsTextArea.value)
-        arrOfTabs.push(newVisualTab)
-        const updatedTabsAsString = JSON.stringify(arrOfTabs, null, 2)
-
-        await chrome.storage.local.set({ [keyNameInStorage]: updatedTabsAsString })
-        loadTabsTextArea.value = updatedTabsAsString
-
-        appendVisualTab(visualTabsContainer, newVisualTab)
-
-        newTabUrl.value = ''
-        newTabName.value = ''
     })
 }
 

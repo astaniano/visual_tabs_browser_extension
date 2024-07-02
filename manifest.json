@@ -1,17 +1,17 @@
 {
-    "manifest_version": 3,
-    "name": "Very simple visual tabs",
-    "description": "Very simple visual tabs",
-    "version": "1.0",
-    "chrome_url_overrides" : {
-      "newtab": "main.html"
-    },
-    "permissions": [
-      "storage"
-    ],
-    "browser_specific_settings": {
-      "gecko": {
-        "id": "{ba87181e-c9c4-4553-9398-3e0f019ff8a4}"
-      }
+  "manifest_version": 3,
+  "name": "Very simple visual tabs",
+  "description": "Very simple visual tabs",
+  "version": "1.0",
+  "chrome_url_overrides" : {
+    "newtab": "main.html"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{ba87181e-c9c4-4553-9398-3e0f019ff8a4}"
     }
   }
+}

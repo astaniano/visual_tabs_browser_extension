@@ -1,3 +1,7 @@
+body { 
+    background-color: #f3f5df;    
+}
+
 .outer-container {
     padding: 20px;
     height: 92vh;
@@ -22,6 +26,11 @@
     color: #ffffff;
     cursor: pointer;
     border: none;
+}
+
+.add-new-link-btn {
+    background-color: rgba(0, 0, 0, 0.2);
+    font-size: 20px;
 }
 
 .text-area-for-json {
