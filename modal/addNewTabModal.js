@@ -1,5 +1,3 @@
-const addNewTabModal = document.getElementById("add-new-tab-modal");
-
 const addNewTabForm = document.getElementById('add-new-tab-form')
 const newTabUrl = document.getElementById('new-tab-url')
 const newTabName = document.getElementById('new-tab-name')
@@ -10,26 +8,6 @@ const newTabBgColor = document.getElementById('new-tab-color')
 // closeModalBtl.onclick = function() {
 //   addNewTabModal.style.display = "none";
 // }
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target === addNewTabModal) {
-    addNewTabModal.style.display = "none";
-  }
-}
-
-function appendNewTabBtn(visualTabsContainer) {
-    const addNewTabBtn = document.createElement("button")
-
-    addNewTabBtn.innerText = "+";
-    addNewTabBtn.classList.add('link')
-    addNewTabBtn.classList.add('add-new-link-btn')
-    addNewTabBtn.addEventListener('click', () => {
-      addNewTabModal.style.display = "block";
-    })
-
-    visualTabsContainer.appendChild(addNewTabBtn)
-}
 
 addNewTabForm.addEventListener("submit", async (e) => {
     e.preventDefault()
@@ -57,5 +35,8 @@ addNewTabForm.addEventListener("submit", async (e) => {
     newTabUrl.value = ''
     newTabName.value = ''
 
-    // TODO: refresh page here
+    recreateVisualTabs()
+
+    const addNewTabModal = document.getElementById("add-new-tab-modal");
+    addNewTabModal.style.display = "none";
 })

@@ -1,3 +1,17 @@
+function appendCreateTabBtn(visualTabsContainer) {
+    const addNewTabModal = document.getElementById("add-new-tab-modal");
+    const addNewTabBtn = document.createElement("button")
+
+    addNewTabBtn.innerText = "+";
+    addNewTabBtn.classList.add('link')
+    addNewTabBtn.classList.add('add-new-link-btn')
+    addNewTabBtn.addEventListener('click', () => {
+      addNewTabModal.style.display = "block";
+    })
+
+    visualTabsContainer.appendChild(addNewTabBtn)
+}
+
 function appendVisualTab(visualTabsContainer, tab) {
     const visualTab = document.createElement("button")
 
@@ -14,11 +28,20 @@ function appendVisualTab(visualTabsContainer, tab) {
     visualTabsContainer.appendChild(visualTab)
 }
 
-function recreateVisualTabs(tabsAsJson, visualTabsContainer) {
+async function recreateVisualTabs() {
+    const visualTabsContainer = document.getElementById('visual-tabs-container')
+
+    const savedTabsAsString = await getTabsFromStore()
+
+    if (savedTabsAsString?.length < 1) {
+        appendCreateTabBtn(visualTabsContainer)
+        return
+    }
+
     let arrOfTabs
 
     try {
-        arrOfTabs = JSON.parse(tabsAsJson)
+        arrOfTabs = JSON.parse(savedTabsAsString)
     } catch (error) {
         alert('invalid json')
         throw new Error('invalid json')
@@ -30,31 +53,19 @@ function recreateVisualTabs(tabsAsJson, visualTabsContainer) {
         appendVisualTab(visualTabsContainer, tab)
     }
 
-    appendNewTabBtn(visualTabsContainer)
-
-    return arrOfTabs
+    appendCreateTabBtn(visualTabsContainer)
 }
 
-async function main() {
-    const visualTabsContainer = document.getElementById('visual-tabs-container')
-    const loadTabsBtn = document.getElementById('load-tabs')
-    const loadTabsTextArea = document.getElementById('ta-for-json')
+// When the user clicks anywhere outside of any of the modals, close it
+window.onclick = function(event) {
+  const settingsModal = document.getElementById("settings-modal");
+  const addNewTabModal = document.getElementById("add-new-tab-modal");
 
-    const savedTabsAsString = await getTabsFromStore()
-
-    if (savedTabsAsString?.length > 0) {
-        recreateVisualTabs(savedTabsAsString, visualTabsContainer)
-
-        loadTabsTextArea.value = savedTabsAsString
-    }
-
-    loadTabsBtn.addEventListener('click', async () => {
-        if (loadTabsTextArea.value.length > 0) {
-            recreateVisualTabs(loadTabsTextArea.value, visualTabsContainer)
-
-            await saveTabsToStore(loadTabsTextArea.value)
-        }
-    })
+  if (event.target === addNewTabModal) {
+    addNewTabModal.style.display = "none";
+  } else if (event.target === settingsModal) {
+    settingsModal.style.display = "none";
+  }
 }
 
-main()
+recreateVisualTabs()

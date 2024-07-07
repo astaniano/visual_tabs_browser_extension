@@ -1,4 +1,4 @@
-.add-new-tab-modal {
+.modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -11,19 +11,7 @@
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
   
-.add-new-tab-form {
-  background-color: #fefefe;
-  padding: 20px;
-  width: 22%;
-  display: flex;
-  flex-direction: column;
-  height: 30%;
-  justify-content: space-around;
-  align-items: center;
-  margin: 15% auto;
-}
-
-/* The Close Button */
+/* The modal close button */
 .close {
   color: #aaaaaa;
   float: right;

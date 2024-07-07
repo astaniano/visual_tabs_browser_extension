@@ -7,15 +7,8 @@ body {
     height: 92vh;
 }
 
-.main-container {
-    display: flex;
-    justify-content: space-between;
+.visual-tabs-container {
     width: 100%;
-    height: 80%;
-}
-
-.links-container {
-    width: 1080px;
 }
 
 .link {
@@ -33,13 +26,12 @@ body {
     font-size: 20px;
 }
 
-.text-area-for-json {
-    height: 400px;
-    width: 100%;
-}
-
-.settings {
+.header {
+    background-color: #cfdfce;
+    height: 7%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    align-items: end;
+    justify-content: center;
+    padding-right: 1%;
 }

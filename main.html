@@ -5,34 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="main.css" />
     <link rel="stylesheet" type="text/css" href="./modal/modal.css" />
+    <link rel="stylesheet" type="text/css" href="./modal/addNewTabModal.css" />
+    <link rel="stylesheet" type="text/css" href="./modal/settingsModal.css" />
     <title>Very simple visual tabs</title>
 </head>
 <body>
     <div class="outer-container">
-
-        <div class="main-container">
-            <div id="visual-tabs-container" class="links-container"></div>
-
-            <div class="settings">
-                <div>
-                    <textarea id="ta-for-json" class="text-area-for-json" ></textarea>
-                    <button id="load-tabs">Load tabs</button>
-                </div>
-            </div>
+        <div class="header">
+            <button id="settings-btn">Settings</button>
         </div>
 
-        <div id="add-new-tab-modal"  class="add-new-tab-modal">
-            <form id="add-new-tab-form" class="add-new-tab-form">
-                <input required type="text" placeholder="new tab url" id="new-tab-url">
-                <input required type="text" placeholder="new tab name" id="new-tab-name">
-                <input type="color" value="#d5d6d0" id="new-tab-color">
-                <input type="submit" value="Save">
-            </form>
+        <div id="visual-tabs-container" class="visual-tabs-container"></div>
+    </div>
+
+    <!-- add-new-tab-modal -->
+    <div id="add-new-tab-modal" class="modal">
+        <form id="add-new-tab-form" class="add-new-tab-form">
+            <input required type="text" placeholder="new tab url" id="new-tab-url">
+            <input required type="text" placeholder="new tab name" id="new-tab-name">
+            <input type="color" value="#d5d6d0" id="new-tab-color">
+            <input type="submit" value="Save">
+        </form>
+    </div>
+
+    <!-- settings-modal -->
+    <div id="settings-modal" class="modal">
+        <div class="settings-container">
+            <textarea id="ta-for-json" class="text-area-for-json" ></textarea>
+            <button id="load-tabs">Load tabs</button>
         </div>
     </div>
 
     <script src="./storage/storage.js" ></script>
     <script src="main.js" ></script>
     <script src="./modal/addNewTabModal.js" ></script>
+    <script src="./modal/settingsModal.js" ></script>
 </body>
 </html>
