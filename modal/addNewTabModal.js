@@ -38,5 +38,5 @@ addNewTabForm.addEventListener("submit", async (e) => {
     const addNewTabModal = document.getElementById("add-new-tab-modal");
     addNewTabModal.style.display = "none";
 
-    window.NavigationPreloadManager()
+    location.reload()
 })
