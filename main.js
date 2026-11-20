@@ -12,7 +12,18 @@ function appendCreateTabBtn(visualTabsContainer) {
     visualTabsContainer.appendChild(addNewTabBtn)
 }
 
-function appendVisualTab(visualTabsContainer, tab) {
+async function removeTabAtIndex(tabIndex) {
+    const savedTabsAsString = await getTabsFromStore()
+    const arrOfTabs = JSON.parse(savedTabsAsString || '[]')
+    arrOfTabs.splice(tabIndex, 1)
+    await saveTabsToStore(JSON.stringify(arrOfTabs, null, 2))
+    await recreateVisualTabs()
+}
+
+function appendVisualTab(visualTabsContainer, tab, tabIndex) {
+    const wrapper = document.createElement("div")
+    wrapper.classList.add('visual-tab-wrapper')
+
     const visualTab = document.createElement("button")
 
     const name = tab.displayName
@@ -20,12 +31,24 @@ function appendVisualTab(visualTabsContainer, tab) {
 
     visualTab.innerText = text
     visualTab.classList.add('link')
+    visualTab.classList.add('visual-tab')
     visualTab.style.backgroundColor = tab.bgColor
     visualTab.addEventListener('click', () => {
         location.assign(tab.url)
     })
 
-    visualTabsContainer.appendChild(visualTab)
+    const removeBtn = document.createElement("button")
+    removeBtn.innerText = "×"
+    removeBtn.classList.add('remove-tab-btn')
+    removeBtn.setAttribute('aria-label', `Remove ${name}`)
+    removeBtn.addEventListener('click', (e) => {
+        e.stopPropagation()
+        removeTabAtIndex(tabIndex)
+    })
+
+    wrapper.appendChild(visualTab)
+    wrapper.appendChild(removeBtn)
+    visualTabsContainer.appendChild(wrapper)
 }
 
 async function recreateVisualTabs() {
@@ -50,9 +73,9 @@ async function recreateVisualTabs() {
 
     visualTabsContainer.replaceChildren([])
 
-    for (const tab of arrOfTabs) {
-        appendVisualTab(visualTabsContainer, tab)
-    }
+    arrOfTabs.forEach((tab, index) => {
+        appendVisualTab(visualTabsContainer, tab, index)
+    })
 
     appendCreateTabBtn(visualTabsContainer)
 }
