@@ -1,12 +1,11 @@
 function appendCreateTabBtn(visualTabsContainer) {
-    const addNewTabModal = document.getElementById("add-new-tab-modal");
     const addNewTabBtn = document.createElement("button")
 
     addNewTabBtn.innerText = "+";
     addNewTabBtn.classList.add('link')
     addNewTabBtn.classList.add('add-new-link-btn')
     addNewTabBtn.addEventListener('click', () => {
-      addNewTabModal.style.display = "block";
+      openAddTabModal()
     })
 
     visualTabsContainer.appendChild(addNewTabBtn)
@@ -46,7 +45,17 @@ function appendVisualTab(visualTabsContainer, tab, tabIndex) {
         removeTabAtIndex(tabIndex)
     })
 
+    const editBtn = document.createElement("button")
+    editBtn.innerText = "Edit"
+    editBtn.classList.add('edit-tab-btn')
+    editBtn.setAttribute('aria-label', `Edit ${name}`)
+    editBtn.addEventListener('click', (e) => {
+        e.stopPropagation()
+        openEditTabModal(tabIndex)
+    })
+
     wrapper.appendChild(visualTab)
+    wrapper.appendChild(editBtn)
     wrapper.appendChild(removeBtn)
     visualTabsContainer.appendChild(wrapper)
 }

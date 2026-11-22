@@ -12,7 +12,7 @@
 <body>
     <div class="outer-container">
         <div class="header">
-            <button id="settings-btn">Settings</button>
+            <button id="settings-btn">Metadata</button>
         </div>
 
         <div id="visual-tabs-container" class="visual-tabs-container"></div>
@@ -20,11 +20,12 @@
 
     <!-- add-new-tab-modal -->
     <div id="add-new-tab-modal" class="modal">
-        <form id="add-new-tab-form" class="add-new-tab-form">
-            <input required type="text" placeholder="new tab url" id="new-tab-url">
-            <input required type="text" placeholder="new tab name" id="new-tab-name">
+        <form id="add-or-edit-tab-form" class="add-or-edit-tab-form">
+            <h2 id="tab-form-heading">New tab</h2>
+            <input required type="text" placeholder="tab url" id="new-tab-url">
+            <input required type="text" placeholder="tab name" id="new-tab-name">
             <input type="color" value="#d5d6d0" id="new-tab-color">
-            <input type="submit" value="Save">
+            <input type="submit" id="tab-form-submit" value="Save">
         </form>
     </div>
 
