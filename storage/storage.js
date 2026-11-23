@@ -8,5 +8,5 @@ async function getTabsFromStore() {
     const chromeStorage = await chrome.storage.local.get([keyNameInStorage])
     const savedTabsAsString = chromeStorage[keyNameInStorage]
 
-    return savedTabsAsString
+    return savedTabsAsString ?? '[]'
 }

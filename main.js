@@ -65,9 +65,10 @@ async function recreateVisualTabs() {
 
     const savedTabsAsString = await getTabsFromStore()
 
-    // if there are 0 tabs stored, simply add "create a new tab btn"
-    if (savedTabsAsString?.length < 1) {
-        appendCreateTabBtn(visualTabsContainer)
+    appendCreateTabBtn(visualTabsContainer)
+
+    // if there are 0 tabs stored, simply do nothing
+    if (savedTabsAsString === '[]') {
         return
     }
 
